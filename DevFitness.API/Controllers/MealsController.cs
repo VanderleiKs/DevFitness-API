@@ -62,6 +62,10 @@ namespace DevFitness.API.Controllers
         [HttpDelete("{mealId}")]
         public IActionResult DeleteMeal(int userId, int mealId)
         {
+            var meal = _dbContext.Meals.SingleOrDefault(m => m.UserId == userId && m.Id == mealId);
+            if (meal == null)
+                return NotFound();
+            meal.Deactivate();
             return NoContent();
         }
     }
